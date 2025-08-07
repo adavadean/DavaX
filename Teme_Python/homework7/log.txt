@@ -1,0 +1,6 @@
+[INFO] Application started successfully.
+[DEBUG] Loading configuration...
+[WARNING] Low memory warning.
+[ERROR] Failed to connect to database.
+[INFO] Retrying connection...
+[INFO] Application terminated.
