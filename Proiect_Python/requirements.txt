@@ -1,0 +1,6 @@
+click
+fastapi
+uvicorn
+pydantic
+prometheus_fastapi_instrumentator
+confluent_kafka

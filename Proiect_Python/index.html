@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Math API Frontend</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="max-w-xl mx-auto p-6 bg-white mt-10 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-4">🔢 Math Operation API</h2>
+
+    <form id="mathForm" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Operation</label>
+        <select id="operation" class="w-full p-2 border rounded">
+          <option value="pow">pow</option>
+          <option value="fibonacci">fibonacci</option>
+          <option value="factorial">factorial</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block font-semibold">X:</label>
+        <input type="number" id="x" class="w-full p-2 border rounded" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Y (only for pow):</label>
+        <input type="number" id="y" class="w-full p-2 border rounded" />
+      </div>
+
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Compute</button>
+    </form>
+
+    <pre id="result" class="mt-6 bg-gray-100 p-4 rounded border overflow-auto text-sm"></pre>
+  </div>
+
+  <script>
+    document.getElementById("mathForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const operation = document.getElementById("operation").value;
+      const x = parseInt(document.getElementById("x").value);
+      const y = document.getElementById("y").value ? parseInt(document.getElementById("y").value) : null;
+
+      const payload = { operation, x };
+      if (operation === "pow") payload.y = y;
+
+      const res = await fetch("http://localhost:8000/compute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "mysecrettoken123"
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
